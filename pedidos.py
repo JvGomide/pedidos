@@ -37,16 +37,31 @@ def imprime_relatorio (Tab_Precos, Pedidos):
     print("\nNo.Pedido  No.Produto  Nome    Quantidade Pedida    Preço Unitário   Valor")
 
     for pedido_cod, produto_dic in Pedidos.items():     #perguntar se tem como fazer for com and
-        print(pedido_cod)  
+        #print("{}      {} ".format(pedido_cod, produto_dic[0]))  
         #print(qnt_produtos)
-        print(produto_dic[0]) #qtd produtos
-        print(produto_dic[1])  #código e qtd dele
+        #print(produto_dic[0]) #qtd produtos
+        #print(produto_dic[1])  #código e qtd dele
 
-        for produto_lista in Tab_Precos.items():        
-            if produto_lista[0] in produto_dic.items():
-                print(produto_lista[0])  #codigo do produto
-                print(produto_lista[1])   #nome
-                print(produto_lista[2])  #preco
+        cont = 0
+
+        for qtd_cada_prod in (produto_dic[1]).values():
+            for myKeys in Tab_Precos.keys():   
+                if myKeys == (produto_dic[1]).get(cont):
+                    linha =  "      " + str(pedido_cod) + "         " + str((produto_dic[1]).get(cont)) + "              " + str(qtd_cada_prod) + "     "      
+                    print(linha)
+                cont += 1
+
+        
+
+        #for produto_lista in Tab_Precos.items():   
+            #linha += str(produto_dic[0])
+            #linha += "      " + str(produto_dic[1])     
+            #if produto_lista in produto_dic:
+               # print(produto_lista[0])  #codigo do produto
+                #print(produto_lista[1])   #nome
+                #print(produto_lista[2])  #preco
+
+        
 
 def valida_produto(CodigoProduto, Tab_Precos):
     #– função que retorna True ou False se o código digitado no pedido existe ou não na Tabela de Preços;
