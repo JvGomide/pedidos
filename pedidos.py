@@ -4,21 +4,17 @@
 def leitura_pedidos (Pedidos):
         Produto = {}
 
-        error = "ok"
-    
-        cod_pedido = int(input("Digite o código do pedido: "))
+        cod_pedido = int(input("\nDigite o código do pedido: "))
         if  cod_pedido != -1:
 
             quantidade_produtos = int(input("Digite quantos produtos tem nesse pedido: "))
         
             for i in range(quantidade_produtos):
-                cod_produto = int(input("\nDigite o código do produto: "))   #verificar se ja foi usado
+                cod_produto = int(input("\nDigite o código do produto: "))
 
                 while not valida_produto(cod_produto, Tab_Preco):                    
                     print("Produto não encontrado, tente novamente")
                     cod_produto = int(input("\nDigite o código do produto: "))
-                    #quantidade_produtos += 1
-                    #break
                                   
                 quantidade = int(input("Digite a quantidade pedida: "))
 
@@ -26,46 +22,32 @@ def leitura_pedidos (Pedidos):
 
             Pedidos[cod_pedido] = [quantidade_produtos, Produto]
         else:
-            error = "Pedido inexiste, -1 mano"
+            error = "Valor inválido"
            
-        #return error
             return -1
         return 0
 
 def imprime_relatorio (Tab_Precos, Pedidos):
-        # essa função deverá imprimir o relatório pedido;
-    print("\nNo.Pedido  No.Produto  Nome    Quantidade Pedida    Preço Unitário   Valor")
+    print(f'{"No.Pedido": <3}      {"No.Produto": <4}     {"Nome": <24}    {"Quantidade Pedida": <3}    {"Preço Unitário": <6}    {"Valor": <8}')
 
-    for pedido_cod, produto_dic in Pedidos.items():     #perguntar se tem como fazer for com and
-        #print("{}      {} ".format(pedido_cod, produto_dic[0]))  
-        #print(qnt_produtos)
-        #print(produto_dic[0]) #qtd produtos
-        #print(produto_dic[1])  #código e qtd dele
+    for pedido_cod, produto_dic in Pedidos.items():  
 
-        cont = 0
-
-        for qtd_cada_prod in (produto_dic[1]).values():
-            for myKeys in Tab_Precos.keys():   
-                if myKeys == (produto_dic[1]).get(cont):
-                    linha =  "      " + str(pedido_cod) + "         " + str((produto_dic[1]).get(cont)) + "              " + str(qtd_cada_prod) + "     "      
-                    print(linha)
-                cont += 1
-
+        listinhaCod = list((produto_dic[1]).keys())
+        listinhaQtd = list((produto_dic[1]).values())
         
-
-        #for produto_lista in Tab_Precos.items():   
-            #linha += str(produto_dic[0])
-            #linha += "      " + str(produto_dic[1])     
-            #if produto_lista in produto_dic:
-               # print(produto_lista[0])  #codigo do produto
-                #print(produto_lista[1])   #nome
-                #print(produto_lista[2])  #preco
-
+        cont = 1
+        for myKeys in Tab_Precos.keys():
+            if len(listinhaCod) == 0:
+                break
+            else:
+                if myKeys == listinhaCod[0]:         
+                    print(f'\n{str(pedido_cod): ^8}  {str(listinhaCod[0]): ^19} {Tab_Precos[cont][0]: <23}  {str(listinhaQtd[0]): ^23} {str(Tab_Precos[cont][1]): ^14}  {str(listinhaQtd[0] * Tab_Precos[cont][1]): ^10}')
+                    listinhaCod.pop(0)
+                    listinhaQtd.pop(0)
+            cont += 1
         
 
 def valida_produto(CodigoProduto, Tab_Precos):
-    #– função que retorna True ou False se o código digitado no pedido existe ou não na Tabela de Preços;
-    
     if CodigoProduto in Tab_Preco.keys():
         return True
             
@@ -83,7 +65,5 @@ while not acabou:
         acabou = True
         imprime_relatorio(Tab_Preco, Pedidos)
     
-    #print(Pedidos)
-   
 
 print("Fim do programa \n" + "-------" * 25)
